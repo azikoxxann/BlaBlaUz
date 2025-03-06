@@ -1,3 +1,4 @@
+import os
 import telebot
 import sqlite3
 import re
@@ -5,7 +6,7 @@ import time
 import threading
 
 # Настройки
-API_TOKEN = "7959754399:AAFFFsPrsVdDn66arIUwuB71LGQiEOr4DaE"
+API_TOKEN = os.getenv("API_TOKEN")  # Берём токен из переменной окружения
 bot = telebot.TeleBot(API_TOKEN)
 
 # Список городов Узбекистана
