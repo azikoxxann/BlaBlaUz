@@ -23,7 +23,7 @@ bot = telebot.TeleBot(API_TOKEN)
 
 while True:
     try:
-        bot.send_message(6088039884, "Проверка связи 🤖")
+        bot.send_message(1087235453, "Проверка связи 🤖")
         time.sleep(45)  # Каждые 45 Секунд
     except Exception as e:
         print(f"Ошибка: {e}")
