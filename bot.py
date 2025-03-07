@@ -4,6 +4,7 @@ import sqlite3
 import re
 import threading
 import time
+from flask import Flask
 
 # Настройки
 API_TOKEN = os.getenv("API_TOKEN")  # Берём токен из переменной окружения
