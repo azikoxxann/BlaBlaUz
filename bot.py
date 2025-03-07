@@ -1,16 +1,9 @@
-import telebot
 import os
-from dotenv import load_dotenv
-from sqlalchemy import create_engine, Column, Integer, String, Float, Date, BigInteger
-from sqlalchemy.orm import sessionmaker, declarative_base
-import logging
-from datetime import datetime
-from flask import Flask
+import telebot
+import sqlite3
+import re
 import threading
 import time
-
-# Загружаем переменные окружения
-load_dotenv()
 
 # Инициализация Flask
 app = Flask(__name__)
