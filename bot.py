@@ -1,18 +1,25 @@
-import os
 import telebot
-import sqlite3
-import re
-import time
-import threading
+import os
+from dotenv import load_dotenv
+from sqlalchemy import create_engine, Column, Integer, String, Float, Date, BigInteger
+from sqlalchemy.orm import sessionmaker, declarative_base
+import logging
+from datetime import datetime
 from flask import Flask
+import threading
+import time
 
-# === 1. Инициализация Flask (чтобы Render не требовал порт) ===
+# Загружаем переменные окружения
+load_dotenv()
+
+# Инициализация Flask
 app = Flask(__name__)
 
 @app.route('/')
 def home():
     return "Бот работает!"
 
+# Функция для запуска Flask в отдельном потоке
 def run_flask():
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
@@ -384,7 +391,7 @@ if __name__ == "__main__":
     except Exception as e:
         print(f"Ошибка в работе бота: {str(e)}")
         
-        # Запускаем Flask и бота в отдельных потоках
+# Запускаем Flask и бота в отдельных потоках
 if __name__ == "__main__":
     flask_thread = threading.Thread(target=run_flask)
     flask_thread.start()
