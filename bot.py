@@ -10,26 +10,18 @@ from flask import Flask
 API_TOKEN = os.getenv("API_TOKEN")  # Берём токен из переменной окружения
 bot = telebot.TeleBot(API_TOKEN)
 
-# Создаём фейковый веб-сервер
 app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return "Бот работает!"
+    return "Бот работает! 🚛"
 
-# Запускаем бота
 def run_bot():
-    bot.polling(none_stop=True)
+    bot.infinity_polling()
 
 if __name__ == "__main__":
     from threading import Thread
-
-    # Запускаем Flask-сервер в отдельном потоке
-    Thread(target=lambda: app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 4000)))).start()
-
-    # Запускаем самого бота
-    run_bot()
-
+    
 while True:
     try:
         bot.send_message(1087235453, "Проверка связи 🤖")
@@ -393,9 +385,8 @@ if __name__ == "__main__":
     except Exception as e:
         print(f"Ошибка в работе бота: {str(e)}")
         
-# Запускаем Flask и бота в отдельных потоках
-if __name__ == "__main__":
-    flask_thread = threading.Thread(target=run_flask)
-    flask_thread.start()
+  # Запускаем бота в отдельном потоке
+    Thread(target=run_bot).start()
 
-    bot.polling(none_stop=True)
+    # Запускаем Gunicorn/Flask
+    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
