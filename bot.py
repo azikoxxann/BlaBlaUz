@@ -21,6 +21,12 @@ def run_bot():
 
 if __name__ == "__main__":
     from threading import Thread
+
+    # 🔹 Запускаем бота в отдельном потоке
+    Thread(target=run_bot).start()
+
+    # 🔹 Запускаем Flask-сервер (Render требует порт)
+    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
     
 while True:
     try:
