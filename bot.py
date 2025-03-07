@@ -5,21 +5,29 @@ import re
 import threading
 import time
 
-# Инициализация Flask
+# Настройки
+API_TOKEN = os.getenv("API_TOKEN")  # Берём токен из переменной окружения
+bot = telebot.TeleBot(API_TOKEN)
+
+# Создаём фейковый веб-сервер
 app = Flask(__name__)
 
 @app.route('/')
 def home():
     return "Бот работает!"
 
-# Функция для запуска Flask в отдельном потоке
-def run_flask():
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
+# Запускаем бота
+def run_bot():
+    bot.polling(none_stop=True)
 
-# Настройки
-API_TOKEN = os.getenv("API_TOKEN")  # Берём токен из переменной окружения
-bot = telebot.TeleBot(API_TOKEN)
+if __name__ == "__main__":
+    from threading import Thread
+
+    # Запускаем Flask-сервер в отдельном потоке
+    Thread(target=lambda: app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 4000)))).start()
+
+    # Запускаем самого бота
+    run_bot()
 
 while True:
     try:
